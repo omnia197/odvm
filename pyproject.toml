@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "odvm"
+version = "0.1.0"
+authors = [
+    { name = "Omnia Ayman", email = "omnia18ayman@gmail.com" },
+]
+description = "Automated analysis and machine learning for big data using Dask"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8"
+keywords = [
+    "machine-learning",
+    "big-data",
+    "automation",
+    "dask",
+    "data-analysis",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Data Scientists",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+
+# Core dependencies
+dependencies = [
+    "dask>=2023.0.0",           # Distributed computing
+    "distributed>=2023.0.0",    # Dask distributed scheduler
+    "numpy>=1.21.0",            # Numerical computing
+    "pandas>=1.3.0",            # Data manipulation
+    "scikit-learn>=1.0.0",      # Machine learning
+    "scipy>=1.7.0",             # Scientific computing
+    "xgboost>=1.5.0",           # Optional: Gradient boosting
+    "dask-ml>=1.9.0",           # Dask-integrated ML
+]
+
+# Optional dependencies (install with `pip install odvm[complete]`)
+[project.optional-dependencies]
+complete = [
+    "matplotlib>=3.5.0",       # Visualization
+    "seaborn>=0.11.0",         # Advanced visualization
+    "fastparquet>=0.8.0",       # Parquet file support
+    "dask-sql>=2023.0.0",       # SQL interface for Dask
+]
+dev = [
+    "pytest>=7.0.0",           # Testing
+    "black>=22.0.0",           # Code formatting
+    "flake8>=4.0.0",           # Linting
+]
+
+# CLI entry point (if applicable)
+[project.scripts]
+odvm-run = "odvm.cli:main"  # Example: CLI command to launch analysis
+
+[project.urls]
+Homepage = "https://github.com/omnia197/odvm"
+Repository = "https://github.com/omnia197/odvm"
+Documentation = "https://github.com/omnia197/odvm#readme"
+
+
+[tool.setuptools.package-data]
+odvm = [
+    "config/*.json",
+    "models/*.pkl",
+]
