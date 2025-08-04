@@ -176,7 +176,18 @@ class ODVM:
             task_type=self.task_type,
             config=self.config.get("split", {})
         )
-        X_train, X_test, y_train, y_test = splitter.split()
+        split_result = splitter.split()
+        if len(split_result) == 6:
+            X_train, X_val, X_test, y_train, y_val, y_test = split_result
+            self.X_train, self.X_val, self.X_test = X_train, X_val, X_test
+            self.y_train, self.y_val, self.y_test = y_train, y_val, y_test
+            print("Data split into train, validation, and test sets.")
+        else:
+            X_train, X_test, y_train, y_test = split_result
+            self.X_train, self.X_test = X_train, X_test
+            self.y_train, self.y_test = y_train, y_test
+            self.X_val, self.y_val = None, None
+            print("Data split into train and test sets.")
 
         scaling_strategy = self.config.get("preprocessing", {}).get("scaling", "none")
         scaler = Scaler(strategy=scaling_strategy)
@@ -185,6 +196,9 @@ class ODVM:
 
         self.X_train, self.X_test = X_train_scaled, X_test_scaled
         self.y_train, self.y_test = y_train, y_test
+        if self.X_val is not None:
+            self.X_val = scaler.transform(self.X_val)
+
 
         print("Data ready for modeling.")
 
