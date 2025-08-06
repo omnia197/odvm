@@ -2,7 +2,7 @@ import pandas as pd
 from utils.detect_backend import detect_backend
 
 class TaskDetector:
-    def __init__(self, df, target):
+    def __init__(self, df, target = None):
         """
         Initialize the TaskDetector.
 
@@ -45,28 +45,46 @@ class TaskDetector:
 
     def detect(self):
         """
-        Detects the machine learning task type (classification, regression, time series).
+        Detects the machine learning task type based on the target column.
 
         Returns
         -------
-        str
-            The type of task detected:
-            - "regression"
-            - "binary_classification"
-            - "classification"
-            - "time_series"
+        dict:
+            {
+                "task_type": str,         # e.g. classification, regression, clustering, etc.
+                "learning_type": str      # supervised or unsupervised
+            }
         """
+        if self.target is None or self.target not in self.sample.columns:
+            #no target -> unsupervised machine learning
+            return {
+                "task_type": "clustering",
+                "learning_type": "unsupervised"
+            }
         target_series = self.sample[self.target]
 
         if "date" in str(self.sample.index.name).lower() or \
            pd.api.types.is_datetime64_any_dtype(target_series):
-            return "time_series"
+            return {
+                "task_type": "time_series",
+                "learning_type": "supervised"
+            }
 
         unique_vals = target_series.nunique()
         if pd.api.types.is_numeric_dtype(target_series):
             if unique_vals <= 10:
-                return "binary_classification" if unique_vals == 2 else "classification"
+                return {
+                    "task_type": "binary_classification" if unique_vals == 2 else "classification",
+                    "learning_type": "supervised"
+                }
             else:
-                return "regression"
+                return {
+                    "task_type": "regression",
+                    "learning_type": "supervised"
+                }
         else:
-            return "classification"
+            return {
+                "task_type": "classification",
+                "learning_type": "supervised"
+            }
+

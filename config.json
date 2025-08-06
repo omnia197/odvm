@@ -1,50 +1,53 @@
 {
     "eda": {
         "visualize": true,
-        "save_dir": "outputs/eda_figures"
-    },
-    "data": {
-        "file_path": "data3.csv",
-        "missing_values": {
-            "strategy": "fill",
-            "fill_value": 0
-        },
-        "outliers": {
-            "strategy": "cap",
-            "lower_bound": 0,
-            "upper_bound": 1000000
-        }
+        "save_dir": "outputs/eda_figures",
+        "save_summary": true,
+        "summary_path": "outputs/eda_summary.json"
     },
     "preprocessing": {
-        "missing_strategy": "fill",
+        "drop_duplicates": true,
+        "missing_strategy": "mean",
         "fill_value": 0,
-        "outlier_strategy": "cap",
+        "fill_strategy": "mean",
+        "outliers": {
+            "strategy": "cap",
+            "columns": "Profit"
+        },
+        "encoding": "label",
         "scaling": "standard"
+    },
+    "split": {
+        "test_size": 0.2,
+        "val_size": 0.1,
+        "random_state": 42
     },
     "modeling": {
         "allowed_models": [
             "LinearRegression",
             "DecisionTreeRegressor"
         ],
-        "tuning": {
-            "enabled": true,
-            "strategy": "grid",
-            "param_grids": {
-                "LinearRegression": {},
-                "DecisionTreeRegressor": {
-                    "max_depth": [
-                        3,
-                        5,
-                        10
-                    ],
-                    "min_samples_split": [
-                        2,
-                        5
-                    ]
-                }
-            },
-            "cv": 3,
-            "scoring": "r2"
+        "tuning": true,
+        "tuning_strategy": "grid",
+        "cross_validate": true,
+        "cv": 5,
+        "n_iter": 10,
+        "scoring": "r2",
+        "param_grids": {
+            "DecisionTreeRegressor": {
+                "max_depth": [
+                    3,
+                    5,
+                    10
+                ],
+                "min_samples_split": [
+                    2,
+                    5
+                ]
+            }
         }
+    },
+    "data": {
+        "file_path": "data1.csv"
     }
 }

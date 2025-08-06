@@ -1,7 +1,7 @@
-# odvm/core/runner.py
-
 from typing import Union, Optional
 import pandas as pd
+import os
+import pickle
 
 from assistant.task_detector import TaskDetector
 from eda.visualizer import EDAVisualizer
@@ -112,10 +112,9 @@ class ODVM:
         deploy : bool
             Whether to deploy the model (API/dashboard).
         """
-        task_type = TaskDetector(self.raw_data, self.target).detect()
-        print(f"Detected task type: {task_type.upper()}")
-
-        self.task_type = task_type
+        task_info = TaskDetector(self.raw_data, self.target).detect()
+        print(f"Detected task: {task_info['task_type'].upper()} | Learning: {task_info['learning_type'].upper()}")
+        self.task_type = task_info['task_type']
 
         if eda:
             print("\nRunning EDA...")
@@ -214,6 +213,9 @@ class ODVM:
         strategy = model_config.get("tuning_strategy", "grid")
         param_grids = model_config.get("param_grids", {})
         scoring = model_config.get("scoring", None)
+        cross_validate = model_config.get("cross_validate", False)
+        n_iter = model_config.get("n_iter", 10)
+        cv = model_config.get("cv", 3)
 
         for name, model in models.items():
             if tuning_enabled and name in param_grids:
@@ -224,7 +226,10 @@ class ODVM:
                     X_train=self.X_train,
                     y_train=self.y_train,
                     strategy=strategy,
-                    scoring=scoring
+                    scoring=scoring,
+                    n_iter=n_iter,
+                    cv=cv,
+                    cross_validate=cross_validate
                 )
                 tuned_models[name] = tuner.tune()
             else:
@@ -237,9 +242,15 @@ class ODVM:
         evaluator = ModelEvaluator(trained_models, trained_params, self.X_test, self.y_test, self.task_type)
         results = evaluator.evaluate()
         self.results = results
+        best_model = max(results, key=lambda x: x["Score"])
+        print(f"Best model: {best_model['Model']} | Score: {best_model['Score']}")
+        self.best_model_name = best_model["Model"]
+        self.best_model_score = best_model["Score"]
 
         report = ReportBuilder(results)
         report.build()
+
+        self.save_best_model(self.results, self.trained_models)
 
     def generate_report(self):
         """Generate detailed evaluation and model performance reports."""
@@ -248,3 +259,17 @@ class ODVM:
     def deploy_model(self):
         """Deploy the trained model via API or dashboard."""
         pass  # To be implemented
+
+
+    def save_best_model(self, results, models_dict, output_path="outputs/models/best_model.pkl"):
+        df = pd.DataFrame(results)
+        best_model_name = df.loc[df['Score'].idxmax()]['Model']
+        best_model = models_dict[best_model_name]
+
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+        with open(output_path, "wb") as f:
+            pickle.dump(best_model, f)
+
+        print(f"Best model '{best_model_name}' saved to: {output_path}")
+

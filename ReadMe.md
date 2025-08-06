@@ -1,8 +1,6 @@
-> UNDER CONSTRUCTION
+> ⚠️ UNDER CONSTRUCTION
 
-
-<h1 align="center"> ODVM: Open, Dynamic, and Versatile Modeling
- </h1>
+<h1 align="center">ODVM: Open, Dynamic, and Versatile Modeling</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/AutoML-Fast%20%26%20Flexible-blue?style=flat-square" />
@@ -21,12 +19,17 @@
 
 ## What is ODVM?
 
-ODVM is a **modular AutoML system** that transforms raw data into actionable models through:
+**ODVM** is a modular and extendable AutoML pipeline designed to take your raw dataset from cleaning to model training and evaluation — with minimal configuration and maximum flexibility.
 
-- Smart preprocessing (cleaning, scaling, encoding)
-- Model selection & tuning (Sklearn + XGB + LGBM + CatBoost)
-- Performance evaluation & explainability
-- Upcoming: Dashboards, API deployment, full PDF reports
+### Key Features
+
+- Automated EDA (analysis + visualization)
+-  Smart Preprocessing (missing values, encoding, scaling, outlier handling)
+-  Model Selection (Scikit-Learn + XGBoost + LightGBM + CatBoost)
+-  Hyperparameter Tuning (Grid / Random)
+-  Reporting (HTML, Excel)
+-  Task Detection (classification, regression, clustering, etc.)
+-  Multi-backend support (Pandas / Dask)
 
 All powered by Python & configurable via a simple `config.json`.
 
@@ -55,41 +58,64 @@ pip install -r requirements_dev.txt
 
 ```
 
+All behavior is driven through a simple, clean JSON config file:
+
+```
+{
+  "eda": {
+    "visualize": true,
+    "save_summary": true,
+    "save_dir": "outputs/eda_figures"
+  },
+  "preprocessing": {
+    "missing_strategy": "mean",
+    "outliers": { "strategy": "cap" },
+    "encoding": "label",
+    "scaling": "standard"
+  },
+  "split": {
+    "test_size": 0.2,
+    "val_size": 0.1,
+    "random_state": 42
+  },
+  "modeling": {
+    "allowed_models": ["LinearRegression", "DecisionTreeRegressor"],
+    "tuning": true,
+    "tuning_strategy": "grid",
+    "param_grids": {
+      "DecisionTreeRegressor": {
+        "max_depth": [3, 5, 10]
+      }
+    },
+    "cv": 3,
+    "scoring": "r2"
+  },
+  "data": {
+    "file_path": "data1.csv"
+  }
+}
+```
+
+
 ## Coming Soon
 
-ODVM is just getting started — here’s what’s next:
+We’re actively expanding ODVM — here’s what’s coming:
 
-- *Auto EDA module*  
+- PDF Reporting: Full modeling and EDA reports including charts and performance metrics
 
-  Automatically detects feature types, distributions, correlations, and visualizes them with minimal config
+- Explainability (XAI): Built-in support for SHAP and LIME to interpret model decisions
 
-- *PDF & HTML reporting*  
+- Auto Feature Engineering: Automatic generation of polynomial, interaction, and time-based features
 
-  Export full model evaluation reports, hyperparameter summaries, and EDA visuals in one click
+- Auto Task Detection: Automatically detect whether the problem is classification, regression, clustering, etc.
 
-- *Explainability (XAI)*  
+- Streamlit Dashboard: Interactive dashboard to explore your dataset, models, and predictions
 
-  SHAP-based explainers for tree models & LIME for black-box interpretation.
+- FastAPI Deployment: Instantly serve trained models as RESTful API endpoints
 
-- *Auto Feature Engineering*  
+- Plugin System: Add custom models, scalers, encoders, or even full pipeline blocks easily
 
-  Generate polynomial, time-based, or domain-specific features automatically.
-
-- *CLI support*
-
-  Run ODVM via terminal with simple arguments:  
-  `odvm run --data my.csv --target y --config config.json`
-
-- *Streamlit Dashboard* 
-
-  Explore your data and models interactively through a beautiful, live dashboard.
-
-- *FastAPI Deployment* 
-  One-line deployment of trained model as an API endpoint.
-
-- *Plugin System*
-
-  Custom encoders, scalers, models, or even full blocks you can drop into ODVM.
+- CLI Interface: Run ODVM workflows directly from the terminal using simple commands
 
 
 ---
@@ -106,3 +132,8 @@ To get started:
 4. Open a Pull Request
 
 ---
+
+### Contact
+
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:omnia18ayman@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/omnia-ayman-1b8340269/)

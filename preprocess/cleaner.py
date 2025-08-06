@@ -3,7 +3,6 @@ import numpy as np
 import logging
 from utils.detect_backend import detect_backend
 
-# إعداد اللوجينج
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
