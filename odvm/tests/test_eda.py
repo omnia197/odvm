@@ -1,6 +1,6 @@
 import pandas as pd
 import pytest
-from eda.analyzer import EDAAnalyzer
+from ..eda.analyzer import EDAAnalyzer
 
 @pytest.fixture
 def sample_df():

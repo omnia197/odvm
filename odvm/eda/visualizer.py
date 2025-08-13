@@ -7,7 +7,7 @@ try:
 except ImportError:
     dd = None
 
-from utils.detect_backend import detect_backend
+from ..utils.detect_backend import detect_backend
 
 
 class EDAVisualizer:

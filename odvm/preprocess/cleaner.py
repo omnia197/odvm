@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import logging
-from utils.detect_backend import detect_backend
+from ..utils.detect_backend import detect_backend
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

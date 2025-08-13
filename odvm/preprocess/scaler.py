@@ -1,5 +1,5 @@
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from utils.detect_backend import detect_backend
+from ..utils.detect_backend import detect_backend
 
 try:
     import dask.dataframe as dd

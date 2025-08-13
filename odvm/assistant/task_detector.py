@@ -1,5 +1,5 @@
 import pandas as pd
-from utils.detect_backend import detect_backend
+from ..utils.detect_backend import detect_backend
 
 class TaskDetector:
     def __init__(self, df, target = None):
