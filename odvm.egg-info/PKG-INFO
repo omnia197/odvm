@@ -1,13 +1,14 @@
 Metadata-Version: 2.4
 Name: odvm
 Version: 0.1.0
-Summary: Open, Dynamic, and Versatile Modeling AutoML system
+Summary: Open, Dynamic, and Versatile Modeling AutoML system package
 Home-page: https://github.com/omnia197/odvm
 Author: Omnia Ayman
 Author-email: Omnia Ayman <omnia81ayman@gmail.com>
 Project-URL: Homepage, https://github.com/omnia197/odvm
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: pandas>=1.0
 Requires-Dist: scikit-learn
 Requires-Dist: xgboost
@@ -16,6 +17,7 @@ Requires-Dist: catboost
 Requires-Dist: dask[dataframe]
 Requires-Dist: fastapi
 Requires-Dist: uvicorn
+Dynamic: license-file
 
 
 <div style="text-align: center; font-size: 2.5em; font-weight: bold; color: #4F46E5; letter-spacing: 2px;">
