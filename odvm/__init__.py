@@ -42,28 +42,28 @@ Planned Extensions
 """
 __version__ = "0.1.1"
 
-from .assistant.task_detector import TaskDetector
+from assistant.task_detector import TaskDetector
 
-from .utils.detect_backend import detect_backend
+from utils.detect_backend import detect_backend
 
-from .core.runner import ODVM
+from core.runner import ODVM
 
-from .eda.analyzer import EDAAnalyzer
-from .eda.visualizer import EDAVisualizer
+from eda.analyzer import EDAAnalyzer
+from eda.visualizer import EDAVisualizer
 
-from .modeling.evaluator import ModelEvaluator
-from .modeling.model_selector import ModelSelector
-from .modeling.trainer import ModelTrainer
-from .modeling.tuner import ModelTuner
-from .modeling.explainer import ModelExplainer
+from modeling.evaluator import ModelEvaluator
+from modeling.model_selector import ModelSelector
+from modeling.trainer import ModelTrainer
+from modeling.tuner import ModelTuner
+from modeling.explainer import ModelExplainer
 
-from .preprocess.cleaner import DataCleaner
-from .preprocess.encoder import Encoder
-from .preprocess.scaler import Scaler
-from .preprocess.splitter import DataSplitter
+from preprocess.cleaner import DataCleaner
+from preprocess.encoder import Encoder
+from preprocess.scaler import Scaler
+from preprocess.splitter import DataSplitter
 
 
-from .reporting.report_builder import ReportBuilder
+from reporting.report_builder import ReportBuilder
 
 
 

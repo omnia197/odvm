@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-from ..utils.detect_backend import detect_backend
+from utils.detect_backend import detect_backend
 
 try:
     import dask.dataframe as dd

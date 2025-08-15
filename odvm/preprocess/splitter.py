@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from ..utils.detect_backend import detect_backend
+from utils.detect_backend import detect_backend
 
 class DataSplitter:
     """

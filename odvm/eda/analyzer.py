@@ -1,4 +1,4 @@
-from ..utils.detect_backend import detect_backend
+from utils.detect_backend import detect_backend
 import os
 import json
 
